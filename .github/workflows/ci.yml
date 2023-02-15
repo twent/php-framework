@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    paths-ignore:
+      - '**/README.md'
+      
+jobs:
+  tests-and-check-format:
+    runs-on: ubuntu-latest
+    env:
+      XDEBUG_MODE: coverage
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Composer install
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          version: 2.x
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Run PHP_CodeSniffer
+        run: vendor/bin/phpcs
+
+      - name: Run PHPUnit tests
+        run: make coverage
+
+      - name: Generate coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          report_type: clover
+          report: 'coverage.xml'
+          coverage_badge_path: 'badge.svg'
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 

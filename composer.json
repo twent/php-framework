@@ -1,0 +1,39 @@
+{
+    "name": "twent/framework",
+    "description": "Simplest PHP Framework",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "twent",
+            "email": "i@twent.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Twent\\Framework\\": "core/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "ext-mbstring": "*",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.2",
+        "nunomaduro/phpinsights": "^2.7",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpunit/phpunit": "^9.6"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
