@@ -51,7 +51,6 @@ final class Route implements RouteContract
         string|Closure $handler,
         ?string $name = null,
     ): Route|HttpResponse {
-        //dd($handler, $name);
         try {
             $config = new RouteConfig(HttpMethod::Get, $path, $handler, $name);
         } catch (Exception $e) {

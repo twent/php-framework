@@ -9,7 +9,6 @@ use Twent\Framework\Http\Enums\HttpMethod;
 final class HttpRequest
 {
     private readonly array $body;
-
     private readonly string $path;
     private readonly array $query;
     private readonly array $cookies;
