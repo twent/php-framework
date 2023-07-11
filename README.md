@@ -3,6 +3,7 @@
 Alpha version (in development).
 
 Features:
+- DI Container (thanks to Brent Rose)
 - Request
 - Response with content type changing (Json by default)
 - ResponseEmitter

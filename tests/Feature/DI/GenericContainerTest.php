@@ -28,4 +28,18 @@ final class GenericContainerTest extends TestCase
 
         $this->assertInstanceOf(Bar::class, $bar);
     }
+
+    public function testSingleton(): void
+    {
+        $container = new GenericContainer();
+
+        $container->singleton(SingletonExample::class, fn() => new SingletonExample());
+        $instance = $container->get(SingletonExample::class);
+
+        $this->assertInstanceOf(SingletonExample::class, $instance);
+        $this->assertEquals(1, $instance::$count);
+
+        $this->assertInstanceOf(SingletonExample::class, $instance);
+        $this->assertEquals(1, $instance::$count);
+    }
 }
