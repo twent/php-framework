@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Twent\Framework\DI;
 
+use ReflectionClass;
+use ReflectionException;
+use ReflectionParameter;
 use Twent\Framework\DI\Contracts\Container;
 
 final class GenericContainer implements Container
@@ -22,8 +25,23 @@ final class GenericContainer implements Container
      */
     public function get(string $className): object
     {
-        $definition = $this->definitions[$className];
+        $definition = $this->definitions[$className] ?? $this->autowire(...);
 
-        return $definition();
+        return $definition($className);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    private function autowire(string $className): object
+    {
+        $reflection = new ReflectionClass($className);
+
+        $parameters = array_map(
+            fn(ReflectionParameter $param) => $this->get($param->getType()->getName()),
+            $reflection->getConstructor()?->getParameters() ?? []
+        );
+
+        return new $className(...$parameters);
     }
 }

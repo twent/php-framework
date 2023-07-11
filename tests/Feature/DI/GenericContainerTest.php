@@ -19,4 +19,13 @@ final class GenericContainerTest extends TestCase
 
         $this->assertInstanceOf(Foo::class, $foo);
     }
+
+    public function testContainerAutowire(): void
+    {
+        $container = new GenericContainer();
+
+        $bar = $container->get(Bar::class);
+
+        $this->assertInstanceOf(Bar::class, $bar);
+    }
 }
