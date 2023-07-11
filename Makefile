@@ -5,7 +5,10 @@ install:
 	composer install --ignore-platform-reqs
 
 format:
-	vendor/bin/phpcs && vendor/bin/phpcbf
+	vendor/bin/phpcs
+
+format-fix:
+	vendor/bin/phpcbf
 
 analyse:
 	vendor/bin/phpinsights analyse -n
