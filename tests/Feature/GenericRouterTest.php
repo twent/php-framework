@@ -12,7 +12,7 @@ use Twent\Framework\Routing\Contracts\Router;
 
 final class GenericRouterTest extends TestCase
 {
-    public function testRouter(): void
+    public function testSimpleRoute(): void
     {
         /** @var Router $router */
         $router = $this->container->get(Router::class);
@@ -23,5 +23,30 @@ final class GenericRouterTest extends TestCase
 
         $this->assertSame(HttpStatus::Ok, $response->getStatus());
         $this->assertSame('Home', $response->getBody());
+    }
+
+    public function testRouteWithParams(): void
+    {
+        /** @var Router $router */
+        $router = $this->container->get(Router::class);
+
+        $response = $router->dispatch(
+            new GenericRequest(HttpMethod::Get, '/hello/twent/2023'),
+        );
+
+        $this->assertSame(HttpStatus::Ok, $response->getStatus());
+        $this->assertSame('Hello, twent! Now is 2023 year.', $response->getBody());
+    }
+
+    public function testDoesntExistsRoute(): void
+    {
+        /** @var Router $router */
+        $router = $this->container->get(Router::class);
+
+        $response = $router->dispatch(
+            new GenericRequest(HttpMethod::Get, '/not/exists'),
+        );
+
+        $this->assertSame(HttpStatus::NotFound, $response->getStatus());
     }
 }

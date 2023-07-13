@@ -16,4 +16,10 @@ final readonly class HomeController
     {
         return new GenericResponse(HttpStatus::Ok, 'Home');
     }
+
+    #[Get(uri: '/hello/{name}/{year}')]
+    public function hello(string $name, string $year): Response
+    {
+        return new GenericResponse(HttpStatus::Ok, "Hello, {$name}! Now is {$year} year.");
+    }
 }

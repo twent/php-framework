@@ -10,7 +10,7 @@ final readonly class GenericResponse implements Contracts\Response
 {
     public function __construct(
         private HttpStatus $status,
-        private string $body,
+        private string $body = '',
     ) {
     }
 
